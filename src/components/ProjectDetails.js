@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import './ProjectDetails.css';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 const ProjectDetails = () => {
   const { projectId } = useParams();
   const navigate = useNavigate();
@@ -10,7 +9,7 @@ const ProjectDetails = () => {
   const [error, setError] = useState(null);
   const fetchProjectDetails = useCallback(async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/projects/${projectId}`);
+      const response = await fetch(`${API_BASE_URL}/api/projects/${projectId}`);
       if (!response.ok) {
         throw new Error(`Project not found with ID: ${projectId}`);
       }
@@ -25,7 +24,7 @@ const ProjectDetails = () => {
 
   const fetchProjectProposals = useCallback(async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/proposals`);
+      const response = await fetch(`${API_BASE_URL}/api/proposals`);
       if (!response || !response.ok) {
         setProposals([]);
         return;

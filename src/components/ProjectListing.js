@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ProjectListing.css';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 const ProjectListing = () => {
   const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
@@ -11,7 +13,7 @@ const ProjectListing = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch('http://localhost:8081/api/projects');
+        const response = await fetch(`${API_BASE_URL}/api/projects`);
         if (!response.ok) {
           throw new Error('Failed to retrieve projects');
         }

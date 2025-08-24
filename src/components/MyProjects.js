@@ -7,13 +7,14 @@ const MyProjects = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
   useEffect(() => {
     fetchMyProjects();
   }, []);
   const fetchMyProjects = async () => {
     try {
       const token = localStorage.getItem('token');
-      const endpoint = 'http://localhost:8080/api/projects';
+      const endpoint = `${API_BASE_URL}/api/projects`;
       const response = await fetch(endpoint, {
         headers: {
           'Authorization': token ? `Bearer ${token}` : '',

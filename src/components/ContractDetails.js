@@ -1,6 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './Contracts.css';
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const ContractDetails = () => {
   const { contractId } = useParams();
@@ -12,7 +15,7 @@ const ContractDetails = () => {
   useEffect(() => {
     const fetchContractDetails = async () => {
       try {
-        const response = await fetch(`/api/contracts/${contractId}`);
+        const response = await fetch(`${API_BASE_URL}/contracts/${contractId}`);
         if (!response.ok) {
           throw new Error('Failed to retrieve contract details');
         }

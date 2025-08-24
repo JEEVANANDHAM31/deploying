@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from 'prop-types';
-import './ProposalForm.css';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 const ProposalForm = ({ projectId }) => {
     const [bid, setBid] = useState("");
     const [proposal, setProposal] = useState("");
@@ -75,7 +74,7 @@ const ProposalForm = ({ projectId }) => {
             console.log('Fetching proposals for project ID:', numericProjectId);
             console.log('Fetching proposals for project ID:', numericProjectId);
             console.log('Fetching proposals for project ID:', numericProjectId);
-            const res = await fetch(`http://localhost:8080/api/proposals/projects/${numericProjectId}`, {
+            const res = await fetch(`${API_BASE_URL}/api/proposals/projects/${numericProjectId}`, {
                 method: "POST",
                 headers: { 
                     "Content-Type": "application/json",

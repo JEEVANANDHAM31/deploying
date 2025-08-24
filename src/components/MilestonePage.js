@@ -1,7 +1,10 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './MilestonePage.css';
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const MilestonePage = () => {
   const { contractId } = useParams();
@@ -18,7 +21,7 @@ const MilestonePage = () => {
 
   const fetchMilestones = useCallback(async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/contracts/${contractId}/milestones`, {
+      const response = await fetch(`${API_BASE_URL}/api/contracts/${contractId}/milestones`, {
         headers: getAuthHeaders()
       });
       if (response.ok) {
@@ -39,7 +42,7 @@ const MilestonePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:8080/api/contracts/${contractId}/milestones`, {
+      const response = await fetch(`${API_BASE_URL}/api/contracts/${contractId}/milestones`, {
         method: 'POST',
         headers: getAuthHeaders(),
         body: JSON.stringify(formData)
@@ -57,7 +60,7 @@ const MilestonePage = () => {
   const updateStatus = async (id, status) => {
     try {
       const milestone = milestones.find(m => m.id === id);
-      const response = await fetch(`http://localhost:8080/api/contracts/${contractId}/milestones/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/contracts/${contractId}/milestones/${id}`, {
         method: 'PUT',
         headers: getAuthHeaders(),
         body: JSON.stringify({ ...milestone, status })

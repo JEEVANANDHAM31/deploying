@@ -4,6 +4,8 @@ import { useAuth } from '../context/AuthContext';
 import useFileUpload from '../api/fileUploadService';
 import './FilePage.css';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 const FilePage = () => {
   const { projectId } = useParams();
   const { getAuthHeaders } = useAuth();
@@ -20,7 +22,7 @@ const FilePage = () => {
 
   const fetchFiles = useCallback(async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/projects/${projectId}/files`, {
+      const response = await fetch(`${API_BASE_URL}/projects/${projectId}/files`, {
         headers: getAuthHeaders()
       });
       if (response.ok) {
@@ -57,7 +59,7 @@ const FilePage = () => {
   const deleteFile = async (fileId) => {
     if (window.confirm('Are you sure you want to delete this file?')) {
       try {
-        const response = await fetch(`http://localhost:8080/api/projects/${projectId}/files/${fileId}`, {
+        const response = await fetch(`${API_BASE_URL}/projects/${projectId}/files/${fileId}`, {
           method: 'DELETE',
           headers: getAuthHeaders()
         });

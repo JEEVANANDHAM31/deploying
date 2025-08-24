@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './ProposalListing.css';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 const ProposalListing = () => {
   const [proposals, setProposals] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -10,7 +12,7 @@ const ProposalListing = () => {
   useEffect(() => {
     const fetchProposals = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/proposals');
+        const response = await fetch(`${API_BASE_URL}/api/proposals`);
         if (!response.ok) {
           throw new Error('Failed to fetch proposals');
         }
