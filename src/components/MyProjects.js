@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './MyProjects.css';
+
 const MyProjects = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -8,9 +9,8 @@ const MyProjects = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user') || '{}');
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-  useEffect(() => {
-    fetchMyProjects();
-  }, []);
+
+  // Move the function above useEffect
   const fetchMyProjects = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -32,12 +32,19 @@ const MyProjects = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchMyProjects();
+  }, []); // no dependencies needed
+
   const handleViewDetails = (projectId) => {
     navigate(`/projects/${projectId}`);
   };
+
   const handleCreateProject = () => {
     navigate('/projects/new');
   };
+
   if (loading) {
     return (
       <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '30px 20px', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', minHeight: '100vh' }}>
@@ -47,6 +54,7 @@ const MyProjects = () => {
       </div>
     );
   }
+
   if (error) {
     return (
       <div className="my-projects">
@@ -56,6 +64,7 @@ const MyProjects = () => {
       </div>
     );
   }
+
   return (
     <div className="my-projects">
       <div className="my-projects-header">
@@ -67,6 +76,7 @@ const MyProjects = () => {
           </button>
         )}
       </div>
+
       {projects.length === 0 ? (
         <div className="empty-state" style={{ background: 'white', color: '#2c3e50', padding: '40px 20px', textAlign: 'center', borderRadius: '12px', boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)', maxWidth: '500px', margin: '0 auto' }}>
           <p>No projects found.</p>
@@ -110,4 +120,5 @@ const MyProjects = () => {
     </div>
   );
 };
+
 export default MyProjects;
